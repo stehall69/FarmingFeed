@@ -7,11 +7,10 @@ namespace FarmingFeed
     class SheepManager
     {
         //Attributes
-        private string sheepID;
         private List<string> sheepBreeds = new List<string>() { "Arapawa", "Perendale", "Romney", "coopworth" };
-        private float feedCost;
+        private float feedCost = 1.03f;
         private float avgHealthyFeedConsumed = 0.5f;
-        private int sheepNum;
+        private int sheepCount;
         //Constructor - constructs an object of this class
         public SheepManager()
         {
@@ -36,11 +35,6 @@ namespace FarmingFeed
             return true;
         }
 
-        //Generates a ID for each sheep
-        public string GenerateID()
-        {
-            return "";
-        }
 
         //Adds breed not specified on the list that the user farms
         public void AddBreed()

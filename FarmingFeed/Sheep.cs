@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace FarmingFeed
@@ -8,46 +9,71 @@ namespace FarmingFeed
     {
         //Attributes and Fields
         private string breed;
-        private float totalFeedConsumed;
-        private float costOfFeedConsumed;
-        private List<float> WeeklyFeedConsumed = new List<float>() { 0,0,0,0,0,0,0};
+        private List<float> weeklyFeedConsumed = new List<float>();
+        private string sheepID = "";
+        
+
 
         //Constructor - Constructs an object of this Class
-        public Sheep(string breed, float totalFeedConsumed, float costOfFeedConsumed)
+        public Sheep(string breed, int sheepCount)
         {
             this.breed = breed;
-            this.totalFeedConsumed = 0;
-            this.costOfFeedConsumed = 0;
+            this.sheepID = GenerateId(sheepCount);
+           
+          
 
 
         }
-        //Calculates total feed consumed
-        public float FeedConsumed()
+        
+        // Add a daily consumption to weekly feed consumed
+        public void AddDailyConsumption(float DailyConsumption) 
         {
-            for (int feedIndex = 0; feedIndex < 7; feedIndex++)
+            weeklyFeedConsumed.Add(DailyConsumption);
+        }
+        
+        //Calculates total feed consumed
+        public float FeedConsumed( )
+        {
+            float totalFeedConsumed = 0;
+
+            for (int feedIndex = 0; feedIndex < weeklyFeedConsumed.Count; feedIndex++)
             {
+                totalFeedConsumed += weeklyFeedConsumed[feedIndex];
 
             }
+            return totalFeedConsumed / 1000;
 
         }
 
-        //returns the value in the private totalFeedConsumed variable
-        public float GetFeed()
-        {
-            return totalFeedConsumed;
-        }
+
 
         
         //Calculates cost of feed consumed
-        public float WeeklyFeedCost()
+        public float WeeklyFeedCost(float feedCost)
         {
-            return 1;
+
+            float costOfFeedConsumed = FeedConsumed() * feedCost;
+            costOfFeedConsumed = (float)Math.Round((decimal)costOfFeedConsumed, 2);
+            return costOfFeedConsumed;
         }
-        
-        //Summarises data for a sheep and displays it 
-        public string SheepInfo()
+
+        //Create Id for Each Animal
+        public string GenerateId(int sheepCount)
         {
-            return "";
+          
+            return sheepCount + breed.Substring(0, 2).ToLower(); 
+        }
+
+        //Summarises data for a sheep and displays it 
+        public string SheepInfo(float feedCost)
+        {
+            String sheepInfo = $"Breed : {breed}\nID : {sheepID}\n\n============Feed Info============\n\nWeekly Feed: {FeedConsumed()}kg \nCost of Feed ${WeeklyFeedCost(feedCost)}\n ";
+            
+            
+
+
+
+            return sheepInfo;
         }
         
         // returns a string collating all the values stored in the private variables
