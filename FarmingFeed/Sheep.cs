@@ -24,6 +24,11 @@ namespace FarmingFeed
 
 
         }
+        //Gets sheep id
+        public string GetSheepId()
+        {
+            return sheepID;
+        }
         
         // Add a daily consumption to weekly feed consumed
         public void AddDailyConsumption(float DailyConsumption) 
@@ -64,14 +69,12 @@ namespace FarmingFeed
             return sheepCount + breed.Substring(0, 2).ToLower(); 
         }
 
+
         //Summarises data for a sheep and displays it 
         public string SheepInfo(float feedCost)
         {
-            String sheepInfo = $"Breed : {breed}\nID : {sheepID}\n\n============Feed Info============\n\nWeekly Feed: {FeedConsumed()}kg \nCost of Feed ${WeeklyFeedCost(feedCost)}\n ";
-            
-            
-
-
+            String sheepInfo = $"Breed : {breed}\nID : {sheepID}\n\n============Feed Info============\n\nWeekly Feed: {FeedConsumed()}kg " +
+                $"\nCost of Feed ${WeeklyFeedCost(feedCost)}\n ";
 
             return sheepInfo;
         }
